@@ -41,4 +41,5 @@ public class ConsistencyCheckerRestEndpoint {
     public boolean checkOrganizationConsistency(RepoItem repoItem) {
         return true;
     }
+    
 }
