@@ -1,5 +1,6 @@
 package repo.consistencychecker.person.service;
 
+import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -10,24 +11,29 @@ import vrds.model.RepoItem;
 
 @Logged
 @Stateless
-public class PersonConsistencyCheckerService {
-    @PersistenceContext
-    private EntityManager entityManager;
+@Remote(RemotePersonConsistencyChecker.class)
+public class PersonConsistencyCheckerService implements
+		RemotePersonConsistencyChecker {
 
-    @Inject
-    private PersonConsistencyCheckerDecisionService personConsistencyCheckerDecisionService;
+	@PersistenceContext
+	private EntityManager entityManager;
 
-    public boolean checkConsistency(RepoItem person) {
-        boolean consistent;
+	@Inject
+	private PersonConsistencyCheckerDecisionService personConsistencyCheckerDecisionService;
 
-        String personName = (String) person.getValue("name");
+	@Override
+	public boolean checkConsistency(RepoItem person) {
+		boolean consistent;
 
-        if (personConsistencyCheckerDecisionService.isNameNotTooLong(personName)) {
-            consistent = false;
-        } else {
-            consistent = true;
-        }
+		String personName = (String) person.getValue("name");
 
-        return consistent;
-    }
+		if (personConsistencyCheckerDecisionService
+				.isNameNotTooLong(personName)) {
+			consistent = false;
+		} else {
+			consistent = true;
+		}
+
+		return consistent;
+	}
 }
