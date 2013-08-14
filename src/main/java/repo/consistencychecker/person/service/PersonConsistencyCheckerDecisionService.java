@@ -7,7 +7,7 @@ import loggee.api.Logged;
 @Logged
 @ApplicationScoped
 public class PersonConsistencyCheckerDecisionService {
-    public boolean isNameNotTooLong(String personName) {
-        return personName.length() > 10;
-    }
+	public boolean isNameNotTooLong(String personName) {
+		return personName.length() > 10;
+	}
 }
